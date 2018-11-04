@@ -3,6 +3,27 @@ const { Prisma } = require('prisma-binding')
 
 const resolvers = {
   Query: {
+    rentals(parent, args, ctx, info) {      
+      return ctx.db.query.rentals({}, info)
+    },  
+    platforms(parent, args, ctx, info) {      
+      return ctx.db.query.platforms({}, info)
+    },  
+    bookings(parent, args, ctx, info) {      
+      return ctx.db.query.bookings({}, info)
+    },          
+    rental(parent, { id } , ctx, info) {
+      return ctx.db.query.rental({ where: { id } } , info)
+    },  
+    platform(parent, { id } , ctx, info) {
+      return ctx.db.query.platform({ where: { id } } , info)
+    },    
+    booking(parent, { id } , ctx, info) {
+      return ctx.db.query.booking({ where: { id } } , info)
+    },  
+    rentalChannels(parent, args, ctx, info) {      
+      return ctx.db.query.rentalChannels({}, info)
+    },                       
     feed(parent, args, ctx, info) {
       return ctx.db.query.posts({ where: { isPublished: true } }, info)
     },
@@ -47,7 +68,7 @@ const server = new GraphQLServer({
     ...req,
     db: new Prisma({
       typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-      endpoint: 'https://us1.prisma.sh/public-warpfrill-899/prisma-fullstack/dev', // the endpoint of the Prisma API
+      endpoint: 'http://localhost:4466', // the endpoint of the Prisma API
       debug: true, // log all GraphQL queries & mutations sent to the Prisma API
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     }),

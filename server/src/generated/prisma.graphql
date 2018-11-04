@@ -1,7 +1,23 @@
-# source: https://us1.prisma.sh/public-warpfrill-899/prisma-fullstack/dev
-# timestamp: Sun Nov 04 2018 10:39:39 GMT-0500 (Eastern Standard Time)
+# source: http://localhost:4466
+# timestamp: Sun Nov 04 2018 10:56:34 GMT-0500 (Eastern Standard Time)
+
+type AggregateBooking {
+  count: Int!
+}
+
+type AggregatePlatform {
+  count: Int!
+}
 
 type AggregatePost {
+  count: Int!
+}
+
+type AggregateRental {
+  count: Int!
+}
+
+type AggregateRentalChannel {
   count: Int!
 }
 
@@ -9,6 +25,252 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+type Booking implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  start: DateTime!
+  end: DateTime!
+  rentalChannel(where: RentalChannelWhereInput): RentalChannel!
+}
+
+"""A connection to a list of items."""
+type BookingConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BookingEdge]!
+  aggregate: AggregateBooking!
+}
+
+input BookingCreateInput {
+  start: DateTime!
+  end: DateTime!
+  rentalChannel: RentalChannelCreateOneInput!
+}
+
+"""An edge in a connection."""
+type BookingEdge {
+  """The item at the end of the edge."""
+  node: Booking!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BookingOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  start_ASC
+  start_DESC
+  end_ASC
+  end_DESC
+}
+
+type BookingPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  start: DateTime!
+  end: DateTime!
+}
+
+type BookingSubscriptionPayload {
+  mutation: MutationType!
+  node: Booking
+  updatedFields: [String!]
+  previousValues: BookingPreviousValues
+}
+
+input BookingSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookingSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookingSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookingSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BookingWhereInput
+}
+
+input BookingUpdateInput {
+  start: DateTime
+  end: DateTime
+  rentalChannel: RentalChannelUpdateOneRequiredInput
+}
+
+input BookingWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookingWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookingWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookingWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  start: DateTime
+
+  """All values that are not equal to given value."""
+  start_not: DateTime
+
+  """All values that are contained in given list."""
+  start_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  start_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  start_lt: DateTime
+
+  """All values less than or equal the given value."""
+  start_lte: DateTime
+
+  """All values greater than the given value."""
+  start_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  start_gte: DateTime
+  end: DateTime
+
+  """All values that are not equal to given value."""
+  end_not: DateTime
+
+  """All values that are contained in given list."""
+  end_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  end_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  end_lt: DateTime
+
+  """All values less than or equal the given value."""
+  end_lte: DateTime
+
+  """All values greater than the given value."""
+  end_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  end_gte: DateTime
+  rentalChannel: RentalChannelWhereInput
+}
+
+input BookingWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -18,11 +280,35 @@ scalar Long
 
 type Mutation {
   createPost(data: PostCreateInput!): Post!
+  createPlatform(data: PlatformCreateInput!): Platform!
+  createRental(data: RentalCreateInput!): Rental!
+  createBooking(data: BookingCreateInput!): Booking!
+  createRentalChannel(data: RentalChannelCreateInput!): RentalChannel!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updatePlatform(data: PlatformUpdateInput!, where: PlatformWhereUniqueInput!): Platform
+  updateRental(data: RentalUpdateInput!, where: RentalWhereUniqueInput!): Rental
+  updateBooking(data: BookingUpdateInput!, where: BookingWhereUniqueInput!): Booking
+  updateRentalChannel(data: RentalChannelUpdateInput!, where: RentalChannelWhereUniqueInput!): RentalChannel
   deletePost(where: PostWhereUniqueInput!): Post
+  deletePlatform(where: PlatformWhereUniqueInput!): Platform
+  deleteRental(where: RentalWhereUniqueInput!): Rental
+  deleteBooking(where: BookingWhereUniqueInput!): Booking
+  deleteRentalChannel(where: RentalChannelWhereUniqueInput!): RentalChannel
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+  upsertPlatform(where: PlatformWhereUniqueInput!, create: PlatformCreateInput!, update: PlatformUpdateInput!): Platform!
+  upsertRental(where: RentalWhereUniqueInput!, create: RentalCreateInput!, update: RentalUpdateInput!): Rental!
+  upsertBooking(where: BookingWhereUniqueInput!, create: BookingCreateInput!, update: BookingUpdateInput!): Booking!
+  upsertRentalChannel(where: RentalChannelWhereUniqueInput!, create: RentalChannelCreateInput!, update: RentalChannelUpdateInput!): RentalChannel!
+  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyPlatforms(data: PlatformUpdateInput!, where: PlatformWhereInput): BatchPayload!
+  updateManyRentals(data: RentalUpdateInput!, where: RentalWhereInput): BatchPayload!
+  updateManyBookings(data: BookingUpdateInput!, where: BookingWhereInput): BatchPayload!
+  updateManyRentalChannels(data: RentalChannelUpdateInput!, where: RentalChannelWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyPlatforms(where: PlatformWhereInput): BatchPayload!
+  deleteManyRentals(where: RentalWhereInput): BatchPayload!
+  deleteManyBookings(where: BookingWhereInput): BatchPayload!
+  deleteManyRentalChannels(where: RentalChannelWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -52,9 +338,320 @@ type PageInfo {
   endCursor: String
 }
 
+type Platform implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  key: String!
+  rentalChannels(where: RentalChannelWhereInput, orderBy: RentalChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RentalChannel!]
+}
+
+"""A connection to a list of items."""
+type PlatformConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PlatformEdge]!
+  aggregate: AggregatePlatform!
+}
+
+input PlatformCreateInput {
+  name: String!
+  key: String!
+  rentalChannels: RentalChannelCreateManyWithoutPlatformInput
+}
+
+input PlatformCreateOneWithoutRentalChannelsInput {
+  create: PlatformCreateWithoutRentalChannelsInput
+  connect: PlatformWhereUniqueInput
+}
+
+input PlatformCreateWithoutRentalChannelsInput {
+  name: String!
+  key: String!
+}
+
+"""An edge in a connection."""
+type PlatformEdge {
+  """The item at the end of the edge."""
+  node: Platform!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PlatformOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  key_ASC
+  key_DESC
+}
+
+type PlatformPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  key: String!
+}
+
+type PlatformSubscriptionPayload {
+  mutation: MutationType!
+  node: Platform
+  updatedFields: [String!]
+  previousValues: PlatformPreviousValues
+}
+
+input PlatformSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlatformSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlatformSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlatformSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PlatformWhereInput
+}
+
+input PlatformUpdateInput {
+  name: String
+  key: String
+  rentalChannels: RentalChannelUpdateManyWithoutPlatformInput
+}
+
+input PlatformUpdateOneRequiredWithoutRentalChannelsInput {
+  create: PlatformCreateWithoutRentalChannelsInput
+  connect: PlatformWhereUniqueInput
+  update: PlatformUpdateWithoutRentalChannelsDataInput
+  upsert: PlatformUpsertWithoutRentalChannelsInput
+}
+
+input PlatformUpdateWithoutRentalChannelsDataInput {
+  name: String
+  key: String
+}
+
+input PlatformUpsertWithoutRentalChannelsInput {
+  update: PlatformUpdateWithoutRentalChannelsDataInput!
+  create: PlatformCreateWithoutRentalChannelsInput!
+}
+
+input PlatformWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlatformWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlatformWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlatformWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  rentalChannels_every: RentalChannelWhereInput
+  rentalChannels_some: RentalChannelWhereInput
+  rentalChannels_none: RentalChannelWhereInput
+}
+
+input PlatformWhereUniqueInput {
+  id: ID
+  key: String
+}
+
 type Post implements Node {
   id: ID!
   isPublished: Boolean!
+  slug: String
   title: String!
   text: String!
 }
@@ -71,6 +668,7 @@ type PostConnection {
 
 input PostCreateInput {
   isPublished: Boolean
+  slug: String
   title: String!
   text: String!
 }
@@ -89,6 +687,8 @@ enum PostOrderByInput {
   id_DESC
   isPublished_ASC
   isPublished_DESC
+  slug_ASC
+  slug_DESC
   title_ASC
   title_DESC
   text_ASC
@@ -102,6 +702,7 @@ enum PostOrderByInput {
 type PostPreviousValues {
   id: ID!
   isPublished: Boolean!
+  slug: String
   title: String!
   text: String!
 }
@@ -147,12 +748,7 @@ input PostSubscriptionWhereInput {
 
 input PostUpdateInput {
   isPublished: Boolean
-  title: String
-  text: String
-}
-
-input PostUpdateManyMutationInput {
-  isPublished: Boolean
+  slug: String
   title: String
   text: String
 }
@@ -210,6 +806,46 @@ input PostWhereInput {
 
   """All values that are not equal to given value."""
   isPublished_not: Boolean
+  slug: String
+
+  """All values that are not equal to given value."""
+  slug_not: String
+
+  """All values that are contained in given list."""
+  slug_in: [String!]
+
+  """All values that are not contained in given list."""
+  slug_not_in: [String!]
+
+  """All values less than the given value."""
+  slug_lt: String
+
+  """All values less than or equal the given value."""
+  slug_lte: String
+
+  """All values greater than the given value."""
+  slug_gt: String
+
+  """All values greater than or equal the given value."""
+  slug_gte: String
+
+  """All values containing the given string."""
+  slug_contains: String
+
+  """All values not containing the given string."""
+  slug_not_contains: String
+
+  """All values starting with the given string."""
+  slug_starts_with: String
+
+  """All values not starting with the given string."""
+  slug_not_starts_with: String
+
+  """All values ending with the given string."""
+  slug_ends_with: String
+
+  """All values not ending with the given string."""
+  slug_not_ends_with: String
   title: String
 
   """All values that are not equal to given value."""
@@ -298,8 +934,20 @@ input PostWhereUniqueInput {
 
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  platforms(where: PlatformWhereInput, orderBy: PlatformOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Platform]!
+  rentals(where: RentalWhereInput, orderBy: RentalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rental]!
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking]!
+  rentalChannels(where: RentalChannelWhereInput, orderBy: RentalChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RentalChannel]!
   post(where: PostWhereUniqueInput!): Post
+  platform(where: PlatformWhereUniqueInput!): Platform
+  rental(where: RentalWhereUniqueInput!): Rental
+  booking(where: BookingWhereUniqueInput!): Booking
+  rentalChannel(where: RentalChannelWhereUniqueInput!): RentalChannel
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  platformsConnection(where: PlatformWhereInput, orderBy: PlatformOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlatformConnection!
+  rentalsConnection(where: RentalWhereInput, orderBy: RentalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RentalConnection!
+  bookingsConnection(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookingConnection!
+  rentalChannelsConnection(where: RentalChannelWhereInput, orderBy: RentalChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RentalChannelConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -308,6 +956,702 @@ type Query {
   ): Node
 }
 
+type Rental implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  key: String!
+  rentalChannels(where: RentalChannelWhereInput, orderBy: RentalChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RentalChannel!]
+}
+
+type RentalChannel implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  icalUrl: String!
+  rentalUrl: String!
+  platform(where: PlatformWhereInput): Platform!
+  rental(where: RentalWhereInput): Rental!
+}
+
+"""A connection to a list of items."""
+type RentalChannelConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RentalChannelEdge]!
+  aggregate: AggregateRentalChannel!
+}
+
+input RentalChannelCreateInput {
+  icalUrl: String!
+  rentalUrl: String!
+  platform: PlatformCreateOneWithoutRentalChannelsInput!
+  rental: RentalCreateOneWithoutRentalChannelsInput!
+}
+
+input RentalChannelCreateManyWithoutPlatformInput {
+  create: [RentalChannelCreateWithoutPlatformInput!]
+  connect: [RentalChannelWhereUniqueInput!]
+}
+
+input RentalChannelCreateManyWithoutRentalInput {
+  create: [RentalChannelCreateWithoutRentalInput!]
+  connect: [RentalChannelWhereUniqueInput!]
+}
+
+input RentalChannelCreateOneInput {
+  create: RentalChannelCreateInput
+  connect: RentalChannelWhereUniqueInput
+}
+
+input RentalChannelCreateWithoutPlatformInput {
+  icalUrl: String!
+  rentalUrl: String!
+  rental: RentalCreateOneWithoutRentalChannelsInput!
+}
+
+input RentalChannelCreateWithoutRentalInput {
+  icalUrl: String!
+  rentalUrl: String!
+  platform: PlatformCreateOneWithoutRentalChannelsInput!
+}
+
+"""An edge in a connection."""
+type RentalChannelEdge {
+  """The item at the end of the edge."""
+  node: RentalChannel!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RentalChannelOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  icalUrl_ASC
+  icalUrl_DESC
+  rentalUrl_ASC
+  rentalUrl_DESC
+}
+
+type RentalChannelPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  icalUrl: String!
+  rentalUrl: String!
+}
+
+type RentalChannelSubscriptionPayload {
+  mutation: MutationType!
+  node: RentalChannel
+  updatedFields: [String!]
+  previousValues: RentalChannelPreviousValues
+}
+
+input RentalChannelSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RentalChannelSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RentalChannelSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RentalChannelSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RentalChannelWhereInput
+}
+
+input RentalChannelUpdateDataInput {
+  icalUrl: String
+  rentalUrl: String
+  platform: PlatformUpdateOneRequiredWithoutRentalChannelsInput
+  rental: RentalUpdateOneRequiredWithoutRentalChannelsInput
+}
+
+input RentalChannelUpdateInput {
+  icalUrl: String
+  rentalUrl: String
+  platform: PlatformUpdateOneRequiredWithoutRentalChannelsInput
+  rental: RentalUpdateOneRequiredWithoutRentalChannelsInput
+}
+
+input RentalChannelUpdateManyWithoutPlatformInput {
+  create: [RentalChannelCreateWithoutPlatformInput!]
+  connect: [RentalChannelWhereUniqueInput!]
+  disconnect: [RentalChannelWhereUniqueInput!]
+  delete: [RentalChannelWhereUniqueInput!]
+  update: [RentalChannelUpdateWithWhereUniqueWithoutPlatformInput!]
+  upsert: [RentalChannelUpsertWithWhereUniqueWithoutPlatformInput!]
+}
+
+input RentalChannelUpdateManyWithoutRentalInput {
+  create: [RentalChannelCreateWithoutRentalInput!]
+  connect: [RentalChannelWhereUniqueInput!]
+  disconnect: [RentalChannelWhereUniqueInput!]
+  delete: [RentalChannelWhereUniqueInput!]
+  update: [RentalChannelUpdateWithWhereUniqueWithoutRentalInput!]
+  upsert: [RentalChannelUpsertWithWhereUniqueWithoutRentalInput!]
+}
+
+input RentalChannelUpdateOneRequiredInput {
+  create: RentalChannelCreateInput
+  connect: RentalChannelWhereUniqueInput
+  update: RentalChannelUpdateDataInput
+  upsert: RentalChannelUpsertNestedInput
+}
+
+input RentalChannelUpdateWithoutPlatformDataInput {
+  icalUrl: String
+  rentalUrl: String
+  rental: RentalUpdateOneRequiredWithoutRentalChannelsInput
+}
+
+input RentalChannelUpdateWithoutRentalDataInput {
+  icalUrl: String
+  rentalUrl: String
+  platform: PlatformUpdateOneRequiredWithoutRentalChannelsInput
+}
+
+input RentalChannelUpdateWithWhereUniqueWithoutPlatformInput {
+  where: RentalChannelWhereUniqueInput!
+  data: RentalChannelUpdateWithoutPlatformDataInput!
+}
+
+input RentalChannelUpdateWithWhereUniqueWithoutRentalInput {
+  where: RentalChannelWhereUniqueInput!
+  data: RentalChannelUpdateWithoutRentalDataInput!
+}
+
+input RentalChannelUpsertNestedInput {
+  update: RentalChannelUpdateDataInput!
+  create: RentalChannelCreateInput!
+}
+
+input RentalChannelUpsertWithWhereUniqueWithoutPlatformInput {
+  where: RentalChannelWhereUniqueInput!
+  update: RentalChannelUpdateWithoutPlatformDataInput!
+  create: RentalChannelCreateWithoutPlatformInput!
+}
+
+input RentalChannelUpsertWithWhereUniqueWithoutRentalInput {
+  where: RentalChannelWhereUniqueInput!
+  update: RentalChannelUpdateWithoutRentalDataInput!
+  create: RentalChannelCreateWithoutRentalInput!
+}
+
+input RentalChannelWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RentalChannelWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RentalChannelWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RentalChannelWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  icalUrl: String
+
+  """All values that are not equal to given value."""
+  icalUrl_not: String
+
+  """All values that are contained in given list."""
+  icalUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  icalUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  icalUrl_lt: String
+
+  """All values less than or equal the given value."""
+  icalUrl_lte: String
+
+  """All values greater than the given value."""
+  icalUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  icalUrl_gte: String
+
+  """All values containing the given string."""
+  icalUrl_contains: String
+
+  """All values not containing the given string."""
+  icalUrl_not_contains: String
+
+  """All values starting with the given string."""
+  icalUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  icalUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  icalUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  icalUrl_not_ends_with: String
+  rentalUrl: String
+
+  """All values that are not equal to given value."""
+  rentalUrl_not: String
+
+  """All values that are contained in given list."""
+  rentalUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  rentalUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  rentalUrl_lt: String
+
+  """All values less than or equal the given value."""
+  rentalUrl_lte: String
+
+  """All values greater than the given value."""
+  rentalUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  rentalUrl_gte: String
+
+  """All values containing the given string."""
+  rentalUrl_contains: String
+
+  """All values not containing the given string."""
+  rentalUrl_not_contains: String
+
+  """All values starting with the given string."""
+  rentalUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  rentalUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  rentalUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  rentalUrl_not_ends_with: String
+  platform: PlatformWhereInput
+  rental: RentalWhereInput
+}
+
+input RentalChannelWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type RentalConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RentalEdge]!
+  aggregate: AggregateRental!
+}
+
+input RentalCreateInput {
+  name: String!
+  key: String!
+  rentalChannels: RentalChannelCreateManyWithoutRentalInput
+}
+
+input RentalCreateOneWithoutRentalChannelsInput {
+  create: RentalCreateWithoutRentalChannelsInput
+  connect: RentalWhereUniqueInput
+}
+
+input RentalCreateWithoutRentalChannelsInput {
+  name: String!
+  key: String!
+}
+
+"""An edge in a connection."""
+type RentalEdge {
+  """The item at the end of the edge."""
+  node: Rental!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RentalOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  key_ASC
+  key_DESC
+}
+
+type RentalPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  key: String!
+}
+
+type RentalSubscriptionPayload {
+  mutation: MutationType!
+  node: Rental
+  updatedFields: [String!]
+  previousValues: RentalPreviousValues
+}
+
+input RentalSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RentalSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RentalSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RentalSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RentalWhereInput
+}
+
+input RentalUpdateInput {
+  name: String
+  key: String
+  rentalChannels: RentalChannelUpdateManyWithoutRentalInput
+}
+
+input RentalUpdateOneRequiredWithoutRentalChannelsInput {
+  create: RentalCreateWithoutRentalChannelsInput
+  connect: RentalWhereUniqueInput
+  update: RentalUpdateWithoutRentalChannelsDataInput
+  upsert: RentalUpsertWithoutRentalChannelsInput
+}
+
+input RentalUpdateWithoutRentalChannelsDataInput {
+  name: String
+  key: String
+}
+
+input RentalUpsertWithoutRentalChannelsInput {
+  update: RentalUpdateWithoutRentalChannelsDataInput!
+  create: RentalCreateWithoutRentalChannelsInput!
+}
+
+input RentalWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RentalWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RentalWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RentalWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  rentalChannels_every: RentalChannelWhereInput
+  rentalChannels_some: RentalChannelWhereInput
+  rentalChannels_none: RentalChannelWhereInput
+}
+
+input RentalWhereUniqueInput {
+  id: ID
+  key: String
+}
+
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  platform(where: PlatformSubscriptionWhereInput): PlatformSubscriptionPayload
+  rental(where: RentalSubscriptionWhereInput): RentalSubscriptionPayload
+  booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
+  rentalChannel(where: RentalChannelSubscriptionWhereInput): RentalChannelSubscriptionPayload
 }

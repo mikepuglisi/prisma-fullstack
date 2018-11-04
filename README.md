@@ -1,3 +1,14 @@
+# Example Complex Manual Query
+
+SELECT r.name, rc.icalUrl, p.name FROM 
+`default@default`.RentalChannel as rc
+INNER JOIN `default@default`._RentalToRentalChannel as r2rc ON r2rc.b = rc.id
+INNER JOIN `default@default`.Rental as r ON r.id = r2rc.a
+INNER JOIN `default@default`._PlatformToRentalChannel  as p2rc ON p2rc.b = rc.id
+INNER JOIN `default@default`.Platform as p ON p.id = p2rc.a
+
+
+
 <h1 align="center"><strong>Boilerplate for a Basic Fullstack GraphQL App with React</strong></h1>
 
 <br />
