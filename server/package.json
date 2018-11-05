@@ -3,6 +3,7 @@
   "scripts": {
     "start": "nodemon src/index.js",
     "dev": "npm-run-all --parallel start playground",
+    "seed": "node database/seed.js",
     "playground": "graphql playground",
     "prisma": "prisma"
   },

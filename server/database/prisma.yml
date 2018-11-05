@@ -7,7 +7,8 @@ datamodel: datamodel.graphql
 
 # Seed your service with initial data based on `seed.graphql`.
 seed:
-  import: seed.graphql
+  run: yarn seed
+  # import: seed.graphql
 
 # Download the GraphQL schema of the Prisma API into 
 # `src/generated/prisma.graphql` (as specfied in `.graphqlconfig.yml`).
