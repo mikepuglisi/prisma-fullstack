@@ -1,28 +1,34 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
+const knex = require('./lib/knex');
+
 
 const resolvers = {
   Query: {
+    rentalsInRadius(parent, args, ctx, info) {
+      return knex.select().from("Rental")      
+    },
     rentals(parent, args, ctx, info) {      
-      return ctx.db.query.rentals({}, info)
+      // console.log(await knex.select().from("Rental"))
+      return ctx.db.query.rentals(args, info)
     },  
+    rental(parent, args , ctx, info) {      
+      return ctx.db.query.rental(args, info)
+    },      
     platforms(parent, args, ctx, info) {      
-      return ctx.db.query.platforms({}, info)
+      return ctx.db.query.platforms(args, info)
     },  
+    platform(parent, args , ctx, info) {
+      return ctx.db.query.platform(args , info)
+    },      
     bookings(parent, args, ctx, info) {      
-      return ctx.db.query.bookings({}, info)
-    },          
-    rental(parent, { id } , ctx, info) {
-      return ctx.db.query.rental({ where: { id } } , info)
+      return ctx.db.query.bookings(args, info)
     },  
-    platform(parent, { id } , ctx, info) {
-      return ctx.db.query.platform({ where: { id } } , info)
-    },    
-    booking(parent, { id } , ctx, info) {
-      return ctx.db.query.booking({ where: { id } } , info)
-    },  
+    booking(parent, args , ctx, info) {
+      return ctx.db.query.booking(args , info)
+    },              
     rentalChannels(parent, args, ctx, info) {      
-      return ctx.db.query.rentalChannels({}, info)
+      return ctx.db.query.rentalChannels(args, info)
     },                       
     feed(parent, args, ctx, info) {
       return ctx.db.query.posts({ where: { isPublished: true } }, info)

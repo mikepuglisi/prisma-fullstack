@@ -6,8 +6,10 @@ type Query {
   post(id: ID!): Post
   platforms(where: PlatformWhereInput, orderBy: PlatformOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Platform]!
   rentals(where: RentalWhereInput, orderBy: RentalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rental]
+  rentalsInRadius(where: RentalWhereInput, orderBy: RentalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rental]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking]!
   rentalChannels(where: RentalChannelWhereInput, orderBy: RentalChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RentalChannel]!
+  
   platform(where: PlatformWhereUniqueInput!): Platform
   rental(where: RentalWhereUniqueInput!): Rental
   booking(where: BookingWhereUniqueInput!): Booking  

@@ -9,6 +9,8 @@
   "dependencies": {
     "graphql": "^14.0.2",
     "graphql-yoga": "1.16.7",
+    "knex": "^0.15.2",
+    "mysql2": "^1.6.2",
     "prisma-binding": "1.5.19"
   },
   "devDependencies": {
